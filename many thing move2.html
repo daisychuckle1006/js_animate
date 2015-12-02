@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>many thing move</title>
+	<style type="text/css">
+		#li1{
+			width:200px;
+			height: 200px;
+			background: pink;
+			font-size: 12px;
+			color: #fff;
+			margin:10px;
+		}
+		#li2{
+			width:200px;
+			height: 200px;
+			background: pink;
+			font-size: 12px;
+			color: #fff;
+			margin:10px;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload = function(){
+			var Li1 = document.getElementById("li1");
+			var Li2 = document.getElementById("li2");
+			Li1.onmouseover = function(){
+				startMove(this,'height',400);
+			}
+			Li1.onmouseout = function(){
+				startMove(this,'height',100);
+			}
+			Li2.onmouseover = function(){
+				startMove(this,'width',400);
+			}
+			Li2.onmouseout = function(){
+				startMove(this,'width',100);
+			}
+
+			function getStyle(obj,attr){
+				if(obj.currentStyle){
+					return obj.currentStyle[attr];
+				}
+				else{
+					return getComputedStyle(obj,false)[attr];
+				}
+			}
+
+			function startMove(obj,attr,iTarget){
+				clearInterval(obj.timer);
+				obj.timer = setInterval(function(){
+					var icur = parseInt(getStyle(obj,attr));
+					var speed = (iTarget - icur)/8;
+					speed = speed >0 ? Math.ceil(speed):Math.floor(speed);
+					if(icur == iTarget){
+						clearInterval(obj.timer);
+					}
+					else{
+						obj.style[attr] = icur + speed + 'px';
+					}
+				},30)
+			}
+	}
+
+	</script>
+</head>
+<body>
+	<ul>
+		<li id="li1"></li>
+		<li id="li2"></li>
+	</ul>
+</body>
+</html>
